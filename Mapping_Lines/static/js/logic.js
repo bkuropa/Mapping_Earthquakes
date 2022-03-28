@@ -2,7 +2,21 @@
 console.log("Working");
 
 // Create the map object with a centre [,] and zoom ,4 level:
-let map = L.map('mapid').setView([30,30], 2);
+let map = L.map('mapid').setView([36.1733, -120.1794], 5);
+
+// Coordinates for each point to be used in the polyline:
+let line = [
+    [33.9416, -118.4085],
+    [37.6213, -122.3790],
+    [40.7899, -111.9791],
+    [47.4502, -122.3088]
+  ];
+
+// Create a polyline using the line coordinates and make it red.
+L.polyline(line, {
+    color: "yellow"
+}).addTo(map);
+
 
 // The tile layer is the background of the map:
 let streets = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -13,13 +27,5 @@ let streets = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{
     //zoomOffset: -1,
     accessToken: API_KEY
 });
-
-// Access the airport GeoJSON URL from GitHub
-let airportData = "https://github.com/bkuropa/Mapping_Earthquakes/blob/Mapping_Multiple_GeoJSON_Points/Mapping_Multiple_GeoJSON_Points/majorAirports.json"
-// airportData = "https://raw.githubusercontent.com/bkuropa/Mapping_Earthquakes/blob/Mapping_Multiple_GeoJSON_Points/Mapping_Multiple_GeoJSON_Points/majorAirports.json"
-// Grabbing our GeoJSON data.
-d3.json(airportData).then(function(data) {
-    console.log(data);
-  // Creating a GeoJSON layer with the retrieved data.
-  L.geoJSON(data).addTo(map);
-});
+// Then we add our 'graymap' tile layer to the map.
+streets.addTo(map);
